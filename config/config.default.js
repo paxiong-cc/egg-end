@@ -23,13 +23,14 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  // 数据库配置
   config.sequelize = {
     dialect: 'mysql',
     host: '127.0.0.1',
     username: 'root',
     password: '123456',
     port: 3306,
-    database: 'eggapi',
+    database: 'paxiong',
     // 中国时区
     timezone: '+08:00',
     define: {
@@ -41,10 +42,24 @@ module.exports = appInfo => {
       paranoid: true,
       createdAt: 'created_at',
       updatedAt: 'updated_at',
-      deletedAt: 'deleted_at',
+      // deletedAt: 'deleted_at',
       // 所有驼峰命名格式化
       underscored: true,
     },
+  };
+
+  config.security = {
+    // 关闭 csrf
+    csrf: {
+      enable: false,
+    },
+    // 跨域白名单
+    domainWhiteList: [ 'http://localhost:7001' ],
+  };
+  // 允许跨域的方法
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET, PUT, POST, DELETE, PATCH',
   };
 
   return {

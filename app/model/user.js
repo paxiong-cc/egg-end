@@ -10,9 +10,6 @@ module.exports = app => {
     sex: { type: ENUM, values: [ '男', '女', '保密' ], allowNull: true, defaultValue: '男', comment: '用户性别' },
     created_at: DATE,
     updated_at: DATE,
-  }, {
-    timestamps: true, // 是否自动写入时间戳
-    tableName: 'user', // 自定义数据表名称
   });
 
   return User;
