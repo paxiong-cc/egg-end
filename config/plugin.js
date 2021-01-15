@@ -16,4 +16,10 @@ module.exports = {
     enable: true,
     package: 'egg-cors',
   },
+
+  // 参数验证
+  valparams: {
+    enable: true,
+    package: 'egg-valparams',
+  },
 };

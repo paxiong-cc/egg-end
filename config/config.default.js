@@ -51,16 +51,27 @@ module.exports = appInfo => {
   config.security = {
     // 关闭 csrf
     csrf: {
-      enable: false,
+      headerName: 'x-csrf-token',
+      ignore: ctx => {
+        return ctx.request.url.startsWith('/user');
+      },
     },
-    // 跨域白名单
-    domainWhiteList: [ 'http://localhost:7001' ],
   };
+
   // 允许跨域的方法
   config.cors = {
     origin: '*',
     allowMethods: 'GET, PUT, POST, DELETE, PATCH',
   };
+
+  // 参数验证
+  config.valparams = {
+    locale: 'zh-cn',
+    throwError: true,
+  };
+
+  /* 中间件 */
+  config.middleware = [ 'errorHandler' ]; // 异常处理
 
   return {
     ...config,

@@ -11,13 +11,10 @@ class UserController extends Controller {
     const password = ctx.request.body.password;
 
     // 判断接口中是否有用户名、密码
-    if (!(username && password)) {
-      ctx.body = {
-        code: 'Error',
-        msg: '请传入正确的参数',
-      };
-      return;
-    }
+    ctx.validate({
+      username: { type: 'string', required: true, desc: '用户名' },
+      password: { type: 'string', required: true, desc: '密码' },
+    });
 
     // 判断user表中是否有重名用户
     if (await this.app.model.User.findOne({ where: { username } })) {
@@ -44,6 +41,25 @@ class UserController extends Controller {
       };
     }
 
+  }
+
+  // 批量创造
+  async bulkCreate() {
+    const { ctx } = this;
+    const user = await ctx.model.User.bulkCreate([{
+      username: '第一个',
+      age: 15,
+    },
+    {
+      username: '第二个',
+      age: 15,
+    },
+    {
+      username: '第三个',
+      age: 15,
+    }]);
+    ctx.status = 201;
+    ctx.body = user;
   }
 }
 
