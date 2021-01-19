@@ -53,7 +53,7 @@ module.exports = appInfo => {
     csrf: {
       headerName: 'x-csrf-token',
       ignore: ctx => {
-        return ctx.request.url.startsWith('/user');
+        return ctx.request.url.startsWith('/');
       },
     },
   };
@@ -68,6 +68,15 @@ module.exports = appInfo => {
   config.valparams = {
     locale: 'zh-cn',
     throwError: true,
+  };
+
+  config.redis = {
+    client: {
+      port: 6379, // Redis port
+      host: '127.0.0.1', // Redis host
+      password: '',
+      db: 0,
+    },
   };
 
   /* 中间件 */

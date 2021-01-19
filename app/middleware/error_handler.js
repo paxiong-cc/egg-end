@@ -33,12 +33,12 @@ module.exports = (option, app) => {
           error = err.errors[0].err[0] ? err.errors[0].err[0] : err.errors[0].err[1];
         }
         ctx.body = {
-          msg: 'fail',
-          data: error,
+          msg: error,
+          code: 400,
         };
       }
 
-      ctx.status = status;
+      ctx.status = 400;
     }
   };
 };
