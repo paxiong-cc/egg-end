@@ -9,7 +9,7 @@ class UserController extends Controller {
 
   // 获取图形验证码
   async getSvgCaptcha() {
-    const { ctx } = this;
+    const { ctx, app } = this;
 
     // 验证uuid是否存在
     ctx.validate({
@@ -31,7 +31,7 @@ class UserController extends Controller {
 
     try {
       // 存入redis
-      await ctx.service.redis.set(`code_${uuid}`, newCaptca.text, 5 * 60);
+      await ctx.service.redis.set(`code_${uuid}`, newCaptca.text, app.config.custom.codeExp);
       // 返回
       ctx.apiSuccess('获取验证码成功', newCaptca.data);
     } catch (err) {

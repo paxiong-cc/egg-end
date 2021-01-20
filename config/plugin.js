@@ -27,4 +27,10 @@ module.exports = {
     enable: true,
     package: 'egg-redis',
   },
+
+  // {app_root}/config/plugin.js
+  jwt: {
+    enable: true,
+    package: 'egg-jwt',
+  },
 };

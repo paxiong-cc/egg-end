@@ -79,8 +79,22 @@ module.exports = appInfo => {
     },
   };
 
+  config.jwt = {
+    secret: 'paxiong_',
+  };
+
   /* 中间件 */
-  config.middleware = [ 'errorHandler' ]; // 异常处理
+  config.middleware = [ 'errorHandler', 'auth' ]; // 异常处理 权限验证
+  config.auth = {
+    ignore: [
+      '/common',
+    ],
+  };
+
+  config.custom = {
+    tokenExp: '24h', // token时效
+    codeExp: 50 * 60, // 验证码时效 s为单位
+  };
 
   return {
     ...config,
