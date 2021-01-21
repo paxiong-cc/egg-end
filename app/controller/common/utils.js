@@ -27,17 +27,15 @@ class UtilsController extends Controller {
       return;
     }
 
-    // TODOS: 登录接口
-
     // 查询邮箱是否存在
-    const userInfo = app.model.User.findOne({
+    const userInfo = await app.model.User.findOne({
       where: {
         email,
         password,
       },
-      attributes: [
-
-      ],
+      attributes: {
+        exclude: [ 'password', 'delete', 'deletedAt', 'deleted_at' ],
+      },
     });
 
     // 判断用户是否存在
@@ -48,6 +46,11 @@ class UtilsController extends Controller {
 
     // 返回对应的token
     const token = ctx.getToken(userInfo.id);
+
+    ctx.apiSuccess('登录成功', {
+      token,
+      data: userInfo,
+    });
   }
 }
 

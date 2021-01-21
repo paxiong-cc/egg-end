@@ -21,8 +21,8 @@ class UserController extends Controller {
 
     // 邮箱正则
     const emailValidate = new RegExp('^([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$', '');
-    const userName = `用户_${unique()}`.slice(0, 30);
-    const eMail = ctx.request.body.email;
+    const username = `用户_${unique()}`.slice(0, 30);
+    const email = ctx.request.body.email;
     const { password, code } = ctx.request.body;
     const uuid = `code_${ctx.request.body.uuid}`;
     const redisUuid = await ctx.service.redis.get(uuid);
@@ -34,32 +34,29 @@ class UserController extends Controller {
     }
 
     // 验证邮箱是否合法
-    if (!emailValidate.test(eMail)) {
+    if (!emailValidate.test(email)) {
       ctx.apiFail('请输入正确的邮箱', 400);
       return;
     }
 
     // 判断user表中是否有重名邮箱
-    if (await this.app.model.User.findOne({ where: { eMail } })) {
+    if (await this.app.model.User.findOne({ where: { email } })) {
       ctx.apiFail('邮箱已被占用, 请重新输入', 400);
       return;
     }
 
     // 注册
     try {
-      const { username, id, email, coin, avatar_url, sex, level } = await app.model.User.create({ username: userName, password, email: eMail });
-      const token = ctx.getToken(id);
+      const userInfo = JSON.parse(JSON.stringify(await app.model.User.create({ username, password, email })));
+      const token = ctx.getToken(userInfo.id);
+
+      delete userInfo.deletedAt;
+      delete userInfo.deleted_at;
+      delete userInfo.password;
 
       const data = {
         token,
-        data: {
-          username,
-          email,
-          coin,
-          avatar_url,
-          sex,
-          level,
-        },
+        data: userInfo,
       };
       // const token = ctx.getToken();
       ctx.apiSuccess('注册成功', data, 200);
@@ -96,8 +93,8 @@ class UserController extends Controller {
 
     // 邮箱正则
     const emailValidate = new RegExp('^([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\\_|\\.]?)*[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$', '');
-    const userName = `管理员_${unique()}`.slice(0, 30);
-    const eMail = ctx.request.body.email;
+    const username = `管理员_${unique()}`.slice(0, 30);
+    const email = ctx.request.body.email;
     const { password, code } = ctx.request.body;
     const uuid = `code_${ctx.request.body.uuid}`;
     const redisUuid = await ctx.service.redis.get(uuid);
@@ -109,32 +106,29 @@ class UserController extends Controller {
     }
 
     // 验证邮箱是否合法
-    if (!emailValidate.test(eMail)) {
+    if (!emailValidate.test(email)) {
       ctx.apiFail('请输入正确的邮箱', 400);
       return;
     }
 
     // 判断user表中是否有重名邮箱
-    if (await this.app.model.User.findOne({ where: { eMail } })) {
+    if (await this.app.model.User.findOne({ where: { email } })) {
       ctx.apiFail('邮箱已被占用, 请重新输入', 400);
       return;
     }
 
     // 注册
     try {
-      const { username, id, email, coin, avatar_url, sex, level } = await app.model.User.create({ username: userName, password, email: eMail, level: '1' });
-      const token = ctx.getToken(id);
+      const userInfo = JSON.parse(JSON.stringify(await app.model.User.create({ username, password, email, level: '1' })));
+      const token = ctx.getToken(userInfo.id);
+
+      delete userInfo.deletedAt;
+      delete userInfo.deleted_at;
+      delete userInfo.password;
 
       const data = {
         token,
-        data: {
-          username,
-          email,
-          coin,
-          avatar_url,
-          sex,
-          level,
-        },
+        data: userInfo,
       };
       // const token = ctx.getToken();
       ctx.apiSuccess('注册成功', data, 200);
