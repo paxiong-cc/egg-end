@@ -42,7 +42,7 @@ module.exports = appInfo => {
       paranoid: true,
       createdAt: 'created_at',
       updatedAt: 'updated_at',
-      // deletedAt: 'deleted_at',
+      deletedAt: 'deleted_at',
       // 所有驼峰命名格式化
       underscored: true,
     },
@@ -91,9 +91,17 @@ module.exports = appInfo => {
     ],
   };
 
+  // 文件上传
+  config.multipart = {
+    fileSize: '50mb',
+    mode: 'stream',
+    fileExtensions: [ '.xls', '.txt', '.jpg', '.JPG', '.png', '.PNG', '.gif', '.GIF', '.jpeg', '.JPEG' ], // 扩展几种上传的文件格式
+  };
+
   config.custom = {
     tokenExp: '24h', // token时效
     codeExp: 50 * 60, // 验证码时效 s为单位
+    fileMax: 1 * 1024 * 10, // 上传的文件大小
   };
 
   return {

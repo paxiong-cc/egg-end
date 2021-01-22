@@ -35,8 +35,10 @@ class UserController extends Controller {
       // 返回
       ctx.apiSuccess('获取验证码成功', newCaptca.data);
     } catch (err) {
-      ctx.status = 406;
-      throw ('获取验证码失败');
+      throw ({
+        message: '获取验证码失败',
+        status: 500,
+      });
     }
   }
 }

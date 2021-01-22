@@ -1,5 +1,6 @@
 'use strict';
 
+// 用户表
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { INTEGER, STRING, DATE, ENUM } = Sequelize;

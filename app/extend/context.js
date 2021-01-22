@@ -33,7 +33,7 @@ module.exports = {
     } catch (err) {
       throw ({
         status: 401,
-        msg: 'token验证失效',
+        message: 'token验证失效',
       });
     }
   },

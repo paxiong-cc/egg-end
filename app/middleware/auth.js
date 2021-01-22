@@ -6,7 +6,7 @@ module.exports = () => {
     if (!ctx.header.authorization) {
       throw ({
         status: 401,
-        msg: '身份验证失败',
+        message: '身份验证失败',
       });
     }
 
