@@ -5,30 +5,30 @@ module.exports = app => {
 
   const Gift = app.model.define('gift', {
     id: {
-      type: INTEGER(20),
+      type: INTEGER(20).UNSIGNED,
       primaryKey: true,
       autoIncrement: true,
     },
     name: {
-      type: STRING,
+      type: STRING(30),
       allowNull: false,
       defaultValue: '',
       comment: '礼物名称',
     },
     image: {
-      type: STRING,
+      type: STRING(200),
       allowNull: true,
       defaultValue: '',
       comment: '礼物图标',
     },
     coin: {
-      type: INTEGER,
+      type: INTEGER(15),
       allowNull: false,
       defaultValue: 0,
       comment: '金币',
     },
-    created_time: DATE,
-    updated_time: DATE,
+    created_at: DATE,
+    updated_at: DATE,
     deleted_at: { type: DATE, allowNull: true, defaultValue: null },
   });
 

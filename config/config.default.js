@@ -84,12 +84,18 @@ module.exports = appInfo => {
   };
 
   /* 中间件 */
-  config.middleware = [ 'errorHandler', 'auth' ]; // 异常处理 权限验证
+  config.middleware = [ 'errorHandler', 'auth', 'authManager' ]; // 异常处理 权限验证
   config.auth = {
     ignore: [
       '/common',
     ],
   };
+  config.authManager = {
+    match: [
+      '/manager',
+    ],
+  };
+
 
   // 文件上传
   config.multipart = {

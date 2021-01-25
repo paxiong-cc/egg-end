@@ -8,6 +8,12 @@ module.exports = {
     this.status = code;
   },
 
+  // 成功提示无data
+  apiSuccessNoData(msg = 'ok', code = 200) {
+    this.body = { msg, code };
+    this.status = code;
+  },
+
   // 失败提示
   apiFail(msg = 'fail', code = 400) {
     this.body = { msg, code };
