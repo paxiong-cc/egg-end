@@ -34,6 +34,10 @@ module.exports = appInfo => {
     // 中国时区
     timezone: '+08:00',
     define: {
+      charset: 'utf8',
+      dialectOptions: {
+        collate: 'utf8_general_ci',
+      },
       // 取消数据表名复数
       freezeTableName: true,
       // 自动写入时间戳 created_at updated_at
