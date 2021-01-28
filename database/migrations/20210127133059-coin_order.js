@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const { INTEGER, STRING, DATE, ENUM } = Sequelize;
-    return queryInterface.createTable('recharge_order', {
+    return queryInterface.createTable('coin_order', {
       id: {
         type: INTEGER(20),
         primaryKey: true,
@@ -17,7 +17,7 @@ module.exports = {
         unique: true,
       },
       user_id: {
-        type: INTEGER,
+        type: INTEGER(20).UNSIGNED,
         allowNull: false,
         defaultValue: 0,
         comment: '用户id',
@@ -29,7 +29,7 @@ module.exports = {
         onUpdate: 'restrict', // 更新时操作
       },
       price: {
-        type: INTEGER,
+        type: INTEGER(20).UNSIGNED,
         allowNull: false,
         defaultValue: 0,
         comment: '价格',
@@ -53,7 +53,7 @@ module.exports = {
     });
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.dropTable('order');
   },
 };
