@@ -11,6 +11,7 @@ const dayjs = require('dayjs');
 
 const Controller = require('egg').Controller;
 
+// 上传文件
 class UploadController extends Controller {
   // 上传图片
   async upload() {

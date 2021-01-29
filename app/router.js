@@ -15,7 +15,8 @@ module.exports = app => {
 
   /**
    * 直播模块
-  */
+   */
   require('./router/live/gift')(app); // 礼物
-  router.get('/', controller.home.index);
+  require('./router/live/coin_order')(app); // 订单
+  require('./router/live/coin_list')(app); // 充值金额列表
 };

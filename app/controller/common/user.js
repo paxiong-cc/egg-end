@@ -4,6 +4,7 @@
 const { v4: unique } = require('uuid');
 const Controller = require('egg').Controller;
 
+// 用户
 class UserController extends Controller {
   /**
    * 普通用户注册

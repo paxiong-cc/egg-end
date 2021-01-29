@@ -1,4 +1,6 @@
 'use strict';
+
+// common/用户表
 module.exports = app => {
   const { STRING, INTEGER, DATE, ENUM } = app.Sequelize;
   // 配置（重要：一定要配置详细，一定要！！！）

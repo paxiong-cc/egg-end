@@ -2,6 +2,7 @@
 
 const Controller = require('egg').Controller;
 
+// 礼物
 class GiftController extends Controller {
   async create() {
     const { ctx, app } = this;

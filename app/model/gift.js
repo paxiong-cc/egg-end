@@ -1,5 +1,6 @@
 'use strict';
 
+// live/礼物表
 module.exports = app => {
   const { STRING, INTEGER, DATE } = app.Sequelize;
 

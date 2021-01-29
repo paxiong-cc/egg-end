@@ -5,6 +5,7 @@ const svgCaptcha = require('svg-captcha');
 // app/controller/user.js
 const Controller = require('egg').Controller;
 
+// 验证码
 class UserController extends Controller {
 
   // 获取图形验证码

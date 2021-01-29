@@ -28,13 +28,13 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'restrict', // 更新时操作
       },
-      price: {
+      coin_id: {
         type: INTEGER(20).UNSIGNED,
         allowNull: false,
         defaultValue: 0,
-        comment: '价格',
+        comment: '金额',
         references: {
-          model: 'gift',
+          model: 'coin_list',
           key: 'id',
         },
         onDelete: 'cascade',
