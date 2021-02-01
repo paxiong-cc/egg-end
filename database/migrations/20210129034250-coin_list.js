@@ -20,6 +20,11 @@ module.exports = {
         allowNull: false,
         defaultValue: 0,
       },
+      delete: {
+        type: INTEGER(20),
+        allowNull: false,
+        defaultValue: 0,
+      },
       created_at: DATE,
       updated_at: DATE,
       deleted_at: { type: DATE, allowNull: true, defaultValue: null },

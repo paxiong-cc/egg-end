@@ -29,13 +29,13 @@ module.exports = app => {
       onDelete: 'cascade',
       onUpdate: 'restrict', // 更新时操作
     },
-    coin_id: {
+    coin_list_id: {
       type: INTEGER(20).UNSIGNED,
       allowNull: false,
       defaultValue: 0,
       comment: 'coin_list的id',
       references: {
-        model: 'code_list',
+        model: 'coin_list',
         key: 'id',
       },
       onDelete: 'cascade',
@@ -57,7 +57,7 @@ module.exports = app => {
   CoinOrder.associate = function() {
     // 关联用户
     CoinOrder.belongsTo(app.model.User);
-    // 关联礼物
+    // 关联礼物列表
     CoinOrder.belongsTo(app.model.CoinList);
   };
 

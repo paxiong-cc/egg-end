@@ -28,11 +28,11 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'restrict', // 更新时操作
       },
-      coin_id: {
+      coin_list_id: {
         type: INTEGER(20).UNSIGNED,
         allowNull: false,
         defaultValue: 0,
-        comment: '金额',
+        comment: 'coin_list的id',
         references: {
           model: 'coin_list',
           key: 'id',
