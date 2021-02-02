@@ -16,11 +16,11 @@ class CoinOrderController extends Controller {
       coinId: { type: 'number', required: true, desc: '金币选项' },
     });
 
-    const coin_id = ctx.query.coinId;
+    const coin_list_id = ctx.request.body.coinId;
     const user_id = Number(ctx.verifyToken(ctx.header.authorization).id);
 
     // 如果coin_id不在充值金币列表里
-    if (!(await app.model.CoinList.findByPk(coin_id))) {
+    if (!(await app.model.CoinList.findByPk(coin_list_id))) {
       ctx.apiFail('当前金币选项不存在');
       return;
     }
@@ -28,10 +28,8 @@ class CoinOrderController extends Controller {
     // 创建订单
     try {
       const no = unique();
-      const data = await app.model.CoinOrder.create({ no, coin_id, user_id });
-      ctx.apiSuccess('创建金币订单成功', {
-        no: data.no,
-      });
+      const data = await app.model.CoinOrder.create({ no, coin_list_id, user_id });
+      ctx.apiSuccess('创建金币订单成功', data.no);
     } catch (err) {
       ctx.apiFail(err.original.code || '创建金币订单失败', 500);
     }
@@ -123,6 +121,7 @@ class CoinOrderController extends Controller {
    */
   async qeuryList() {
     const { ctx, app } = this;
+    const Op = app.model.Sequelize.Op;
 
     // 判断是否合理
     ctx.validate({
@@ -130,53 +129,69 @@ class CoinOrderController extends Controller {
       size: { type: 'int', required: true, max: 100, desc: '条数' }, // 1-成功 2-关闭
       status: { type: 'string', required: false, range: { in: [ 'pending', 'success', 'fail' ] }, desc: '状态' },
       userId: { type: 'int', required: false, desc: '用户id' },
-      orderByStatus: { type: 'string', required: false, range: { in: [ 'pending', 'success', 'fail' ] }, desc: '状态排序' },
-      orderByTime: { type: 'string', required: false, range: { in: [ 'pending', 'success', 'fail' ] }, desc: '状态排序' },
+      orderByTime: { type: 'string', required: false, range: { in: [ 'ASC', 'DESC' ] }, desc: '状态排序' },
+      startTime: { type: 'date', required: false, desc: '开始时间' },
+      endTime: { type: 'date', required: false, desc: '结束时间' },
+      keyword: { type: 'string', required: false, desc: '人员名称' },
     });
-    // TODO: 排序
-    const { page, size, status, userId } = ctx.query;
-    const options = { status, user_id: userId };
+
+    const { page, size, status, userId, orderByTime, startTime, endTime, keyword } = ctx.query;
+    const wOptions = { status, user_id: userId };
+    const oOptions = [
+      [ 'created_at', orderByTime || 'DESC' ],
+    ];
 
     // 处理参数为空的时候
-    for (const key in options) {
-      options[key]
+    for (const key in wOptions) {
+      wOptions[key]
         ? ''
-        : Reflect.deleteProperty(options, key);
+        : Reflect.deleteProperty(wOptions, key);
+    }
+
+    // 判断开始时间存在时打入时间赛选条件
+    if (startTime) {
+      const end = endTime || new Date();
+
+      wOptions.created_at = {
+        [Op.gte]: startTime,
+        [Op.lte]: end,
+      };
+    }
+
+    // 判断人员名称关键字是否存在
+    if (keyword) {
+      wOptions['$user.username$'] = {
+        [Op.like]: `%${keyword}%`,
+      };
     }
 
     const orderList = await app.model.CoinOrder.findAndCountAll({
-      where: options,
+      attributes: [
+        'id',
+        'no',
+        [ app.model.Sequelize.col('coin_list.coin'), 'coin' ],
+        [ app.model.Sequelize.col('coin_list.cost'), 'cost' ],
+        'status',
+        [ app.model.Sequelize.col('user.username'), 'username' ],
+        'created_at',
+        'updated_at',
+      ],
+      where: wOptions,
       offset: (page - 1) * size,
       limit: size,
       include: [
-        { model: app.model.CoinList, attributes: [ 'coin', 'cost' ] },
-        { model: app.model.User, attributes: [ 'username' ] },
+        { model: app.model.CoinList, as: 'coin_list', attributes: [] }, // as的值作为查询出来的新集合的键
+        { model: app.model.User, as: 'user', attributes: [] }, // as的值作为查询出来的新集合的键
       ],
-      order: [
-        [ 'created_at', 'DESC' ],
-        [ 'updated_at', 'DESC' ],
-      ],
+      order: oOptions,
     });
 
-    // 组装数据
-    const backData = Object.create(null);
+    // 修改字段名
+    const newOrderList = Object.create(null);
+    newOrderList.total = orderList.count;
+    newOrderList.list = orderList.rows;
 
-    backData.list = orderList.rows.map(item => {
-      const {
-        id,
-        no,
-        status,
-        coin_list: { coin, cost },
-        user: { username },
-        created_at,
-        updated_at,
-      } = item;
-      return { id, no, coin, cost, status, username, created_at, updated_at };
-    });
-
-    backData.total = orderList.count;
-
-    ctx.apiSuccess('操作成功', backData);
+    ctx.apiSuccess('操作成功', newOrderList);
   }
 }
 

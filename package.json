@@ -16,6 +16,7 @@
     "egg-scripts": "^2.11.0",
     "egg-sequelize": "^6.0.0",
     "egg-valparams": "^1.4.3",
+    "momentjs": "^2.0.0",
     "mysql2": "^2.2.5",
     "stream-wormhole": "^1.1.0",
     "svg-captcha": "^1.4.0",
@@ -29,6 +30,7 @@
     "egg-mock": "^3.21.0",
     "eslint": "^5.13.0",
     "eslint-config-egg": "^7.1.0",
+    "moment": "^2.29.1",
     "sequelize-cli": "^6.2.0"
   },
   "engines": {
