@@ -3,7 +3,7 @@
 // common/用户表
 module.exports = app => {
   const { STRING, INTEGER, DATE, ENUM } = app.Sequelize;
-  // 配置（重要：一定要配置详细，一定要！！！）
+
   const User = app.model.define('user', {
     id: { type: INTEGER(20).UNSIGNED, primaryKey: true, autoIncrement: true },
     username: { type: STRING(30), allowNull: false, defaultValue: '', comment: '用户名称', unique: true },

@@ -16,6 +16,12 @@ class GiftController extends Controller {
 
     const { name, image, coin } = ctx.request.body;
 
+    // 判断礼物名是否重复
+    if (await app.model.Gift.findOne({ where: { name } })) {
+      ctx.apiSuccessNoData('礼物名重复');
+      return;
+    }
+
     try {
       await app.model.Gift.create({ name, image, coin });
       ctx.apiSuccessNoData('添加礼物成功');

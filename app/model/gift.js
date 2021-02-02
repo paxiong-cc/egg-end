@@ -14,6 +14,7 @@ module.exports = app => {
       type: STRING(30),
       allowNull: false,
       defaultValue: '',
+      unique: true,
       comment: '礼物名称',
     },
     image: {
