@@ -4,10 +4,15 @@
 const { v4: unique } = require('uuid');
 const Controller = require('egg').Controller;
 
-// 用户
+/**
+ * @controller user 用户接口
+ */
 class UserController extends Controller {
   /**
-   * 普通用户注册
+   * @summary 普通用户注册
+   * @description 创建用户，记录用户账户/密码/类型
+   * @router post /common/user/register
+   * @request body createUser *body
    */
   async userRegister() {
     const { ctx, app } = this;
@@ -69,7 +74,11 @@ class UserController extends Controller {
   }
 
   /**
-   * 管理员注册（只有超管能够创建管理员）
+   * @summary 管理员注册（只有超管能够创建管理员）
+   * @description 创建管理员，记录用户账户/密码/类型
+   * @router post /admin/register
+   * @token ecurityDefinitions验证
+   * @request body createAdmin *body
    */
   async adminRegister() {
     const { ctx, app } = this;

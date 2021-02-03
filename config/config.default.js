@@ -52,6 +52,40 @@ module.exports = appInfo => {
     },
   };
 
+  // swagger
+  // {app_root}/config/config.default.js
+  config.swaggerdoc = {
+    dirScanner: './app/controller',
+    apiInfo: {
+      title: 'egg-swagger',
+      description: 'swagger-ui for egg',
+      version: '1.0.0',
+    },
+    schemes: [ 'http', 'https' ],
+    consumes: [ 'application/json' ],
+    produces: [ 'application/json' ],
+    securityDefinitions: {
+      token: {
+        type: 'apiKey',
+        name: 'Authorization',
+        in: 'header',
+      },
+    // oauth2: {
+    //   type: 'oauth2',
+    //   tokenUrl: 'http://petstore.swagger.io/oauth/dialog',
+    //   flow: 'password',
+    //   scopes: {
+    //     'write:access_token': 'write access_token',
+    //     'read:access_token': 'read access_token',
+    //   },
+    // },
+    },
+    enableSecurity: true,
+    // enableValidate: true,
+    routerMap: false,
+    enable: true,
+  };
+
   config.security = {
     // 关闭 csrf
     csrf: {
@@ -92,6 +126,8 @@ module.exports = appInfo => {
   config.auth = {
     ignore: [
       '/common',
+      ctx => ctx.path.startsWith('/swagger'),
+      ctx => ctx.path.startsWith('/favicon'),
     ],
   };
   config.authManager = {

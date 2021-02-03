@@ -3,10 +3,15 @@
 const Controller = require('egg').Controller;
 const { v4: unique } = require('uuid');
 
-// 金币订单
+/**
+ * @controller live 金币订单
+ */
 class CoinOrderController extends Controller {
   /**
-   * 创建购买金币订单
+   * @summary 创建购买金币订单
+   * @router post /live/createOrder
+   * @token ecurityDefinitions验证
+   * @request body createCoinOrder *body
    */
   async create() {
     const { ctx, app } = this;
@@ -36,7 +41,11 @@ class CoinOrderController extends Controller {
   }
 
   /**
-   * 修改订单状态（管理员才能操作）
+   * @summary 修改订单状态（管理员才能操作）
+   * @router patch /manager/live/editOrder/{id}/{status}
+   * @token ecurityDefinitions验证
+   * @request path number *id
+   * @request path number *status
    */
   async edit() {
     const { ctx, app } = this;
@@ -117,7 +126,17 @@ class CoinOrderController extends Controller {
   }
 
   /**
-   * 查询订单列表
+   * @summary 查询订单列表
+   * @router get /live/order
+   * @token ecurityDefinitions验证
+   * @request query number *page
+   * @request query number *size
+   * @request query string status
+   * @request query number userId
+   * @request query string orderByTime
+   * @request query string startTime
+   * @request query string endTime
+   * @request query string keyword
    */
   async qeuryList() {
     const { ctx, app } = this;

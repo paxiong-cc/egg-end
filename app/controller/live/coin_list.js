@@ -2,9 +2,16 @@
 
 const Controller = require('egg').Controller;
 
+
+/**
+ * @controller live 金币充值列表
+ */
 class CoinListController extends Controller {
   /**
-   * 创建充值金额列表数据
+   * @summary 创建充值金额列表数据
+   * @router post /manager/createCoinLis
+   * @token ecurityDefinitions验证
+   * @request body createCoinlist *body
    */
   async create() {
     const { ctx, app } = this;

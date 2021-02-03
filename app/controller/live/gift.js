@@ -2,8 +2,16 @@
 
 const Controller = require('egg').Controller;
 
-// 礼物
+/**
+ * @controller live 礼物
+ */
 class GiftController extends Controller {
+  /**
+   * @summary 创建购买金币订单
+   * @router post /manager/create
+   * @token ecurityDefinitions验证
+   * @request body createGift *body
+   */
   async create() {
     const { ctx, app } = this;
 

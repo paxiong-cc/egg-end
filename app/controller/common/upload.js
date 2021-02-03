@@ -11,9 +11,17 @@ const dayjs = require('dayjs');
 
 const Controller = require('egg').Controller;
 
-// 上传文件
+/**
+ * @controller upload 图片上传
+ */
 class UploadController extends Controller {
-  // 上传图片
+  /**
+   * @summary 上传图片
+   * @description 上传文件
+   * @router post /upload
+   * @token ecurityDefinitions验证
+   * @request formData file *file
+   */
   async upload() {
     const stream = await this.ctx.getFileStream();
 

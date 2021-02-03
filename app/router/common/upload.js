@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = app => {
-  app.router.put('/upload', app.controller.common.upload.upload); // 上传文件
+  app.router.post('/upload', app.controller.common.upload.upload); // 上传文件
 };

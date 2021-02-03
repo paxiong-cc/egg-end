@@ -33,4 +33,10 @@ module.exports = {
     enable: true,
     package: 'egg-jwt',
   },
+
+  // swagger
+  swaggerdoc: {
+    enable: true,
+    package: 'egg-swagger-doc',
+  },
 };

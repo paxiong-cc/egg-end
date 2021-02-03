@@ -2,10 +2,14 @@
 
 const Controller = require('egg').Controller;
 
-// 打杂的
+/**
+ * @controller utils 打杂的
+ */
 class UtilsController extends Controller {
   /**
-   * 登录
+   * @summary 登录
+   * @router post /common/login
+   * @request body login *body
    */
   async login() {
     const { ctx, app } = this;
