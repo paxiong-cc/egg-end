@@ -25,7 +25,7 @@ class CoinOrderController extends Controller {
     const user_id = Number(ctx.verifyToken(ctx.header.authorization).id);
 
     // 如果coin_id不在充值金币列表里
-    if (!(await app.model.CoinList.findByPk(coin_list_id))) {
+    if (!(await app.model.Live.CoinList.findByPk(coin_list_id))) {
       ctx.apiFail('当前金币选项不存在');
       return;
     }
@@ -33,7 +33,7 @@ class CoinOrderController extends Controller {
     // 创建订单
     try {
       const no = unique();
-      const data = await app.model.CoinOrder.create({ no, coin_list_id, user_id });
+      const data = await app.model.Live.CoinOrder.create({ no, coin_list_id, user_id });
       ctx.apiSuccess('创建金币订单成功', data.no);
     } catch (err) {
       ctx.apiFail(err.original.code || '创建金币订单失败', 500);
@@ -56,7 +56,7 @@ class CoinOrderController extends Controller {
     });
 
     const { id, status } = ctx.params;
-    const orderInfo = await app.model.CoinOrder.findOne({
+    const orderInfo = await app.model.Live.CoinOrder.findOne({
       where: {
         id,
       },
@@ -84,7 +84,7 @@ class CoinOrderController extends Controller {
 
       try {
         // 修改订单状态
-        await ctx.model.CoinOrder.update({
+        await ctx.model.Live.CoinOrder.update({
           status: 'success',
         }, {
           where: {
@@ -96,7 +96,7 @@ class CoinOrderController extends Controller {
         const totalCoin = orderInfo.coin_list.coin + orderInfo.user.coin;
         const userId = orderInfo.user_id;
 
-        await ctx.model.User.update({
+        await ctx.model.Common.User.update({
           coin: totalCoin,
         }, {
           where: {
@@ -184,7 +184,7 @@ class CoinOrderController extends Controller {
       };
     }
 
-    const orderList = await app.model.CoinOrder.findAndCountAll({
+    const orderList = await app.model.Live.CoinOrder.findAndCountAll({
       attributes: [
         'id',
         'no',

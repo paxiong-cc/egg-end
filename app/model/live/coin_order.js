@@ -56,9 +56,9 @@ module.exports = app => {
   // 关联关系
   CoinOrder.associate = function() {
     // 关联用户
-    CoinOrder.belongsTo(app.model.User);
+    CoinOrder.belongsTo(app.model.Common.User);
     // 关联礼物列表
-    CoinOrder.belongsTo(app.model.CoinList);
+    CoinOrder.belongsTo(app.model.Live.CoinList);
   };
 
   return CoinOrder;

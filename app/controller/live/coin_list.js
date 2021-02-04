@@ -25,14 +25,14 @@ class CoinListController extends Controller {
     const { coin, cost } = ctx.request.body;
 
     // 如果列表里有相同金币面板则创建失败
-    if (await app.model.CoinList.findOne({ where: { coin } })) {
+    if (await app.model.Live.CoinList.findOne({ where: { coin } })) {
       ctx.apiFail('已存在列表金额, 请勿重复添加');
       return;
     }
 
     // 创建
     try {
-      await app.model.CoinList.create({ coin, cost });
+      await app.model.Live.CoinList.create({ coin, cost });
       ctx.apiSuccessNoData('创建充值金额列表成功');
     } catch (err) {
       ctx.apiFail(err.original.code || '创建充值金额列表失败', 500);

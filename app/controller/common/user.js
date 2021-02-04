@@ -53,7 +53,7 @@ class UserController extends Controller {
 
     // 注册
     try {
-      const userInfo = JSON.parse(JSON.stringify(await app.model.User.create({ username, password, email })));
+      const userInfo = JSON.parse(JSON.stringify(await app.model.Common.User.create({ username, password, email })));
       const token = ctx.getToken(userInfo.id);
 
       delete userInfo.deletedAt;
@@ -94,7 +94,7 @@ class UserController extends Controller {
     // 判断是否为管理员
     const token = ctx.header.authorization;
     const data = ctx.verifyToken(token);
-    const user = await app.model.User.findByPk(data.id);
+    const user = await app.model.Common.User.findByPk(data.id);
 
     if (!(user && user.level === '0')) {
       ctx.apiFail('暂无权限操作', 403);
@@ -122,14 +122,14 @@ class UserController extends Controller {
     }
 
     // 判断user表中是否有重名邮箱
-    if (await this.app.model.User.findOne({ where: { email } })) {
+    if (await this.app.model.Common.User.findOne({ where: { email } })) {
       ctx.apiFail('邮箱已被占用, 请重新输入', 400);
       return;
     }
 
     // 注册
     try {
-      const userInfo = JSON.parse(JSON.stringify(await app.model.User.create({ username, password, email, level: '1' })));
+      const userInfo = JSON.parse(JSON.stringify(await app.model.Common.User.create({ username, password, email, level: '1' })));
       const token = ctx.getToken(userInfo.id);
 
       delete userInfo.deletedAt;
