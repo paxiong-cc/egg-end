@@ -19,7 +19,7 @@
     "username": "root",
     "password": "123456",
     "database": "paxiong",
-    "host": "127.0.0.1",
+    "host": "http://47.115.60.210/",
     "dialect": "mysql",
     "timezone": "+08:00"
   }
