@@ -1,12 +1,11 @@
 
+sudo: false
 language: node_js
+addons:
+  ssh_known_hosts: 47.115.60.210
 node_js:
   - '10'
 before_install:
-  - npm i npminstall -g
-install:
-  - npminstall
-script:
-  - npm run ci
+  - openssl aes-256-cbc -K $encrypted_939bb46a04c3_key -iv $encrypted_939bb46a04c3_iv -in local.enc -out local -d
 after_script:
-  - npminstall codecov && codecov
+  - echo 1111
