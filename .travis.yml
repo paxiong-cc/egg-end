@@ -6,8 +6,8 @@ addons:
 node_js:
   - '10'
 before_install:
-  - openssl aes-256-cbc -K $encrypted_2736fab291f0_key -iv $encrypted_2736fab291f0_iv -in scripts/login.enc -out scripts/login -d
-  - chmod 600 scripts/login
+  - openssl aes-256-cbc -K $encrypted_2736fab291f0_key -iv $encrypted_2736fab291f0_iv -in scripts/login.enc -out ~/.ssh/login -d
+  - chmod 600 ~/.ssh/login
   - npm i npminstall -g
 install:
   - npminstall
