@@ -5,7 +5,7 @@ addons:
 node_js:
 - '10'
 before_install:
-- openssl aes-256-cbc -K $encrypted_5c3bef487596_key -iv $encrypted_5c3bef487596_iv -in scripts/paxiong.enc -out scripts/paxiong -d
+- openssl aes-256-cbc -K $encrypted_939bb46a04c3_key -iv $encrypted_939bb46a04c3_iv -in scripts/local.enc -out scripts/local -d
 - npm i npminstall -g
 install:
 - npminstall
