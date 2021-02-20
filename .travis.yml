@@ -3,13 +3,16 @@ language: node_js
 addons:
   ssh_known_hosts: 47.115.60.210
 node_js:
-- '10'
+  - '10'
 before_install:
-- openssl aes-256-cbc -K $encrypted_939bb46a04c3_key -iv $encrypted_939bb46a04c3_iv -in scripts/local.enc -out scripts/local -d
-- npm i npminstall -g
+  - openssl aes-256-cbc -K $encrypted_213ed3ea453b_key -iv $encrypted_213ed3ea453b_iv -in scripts/last.enc -out scripts/last -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 scripts/last
+  - ssh-add scripts/last
+  - npm i npminstall -g
 install:
-- npminstall
+  - npminstall
 script:
-- npm run ci
+  - npm run ci
 after_script:
-- ssh paxiong@47.115.60.210 'cd /opt && mkdir sssssss && echo 11111'
+  - ssh paxiong@47.115.60.210 'cd /opt && mkdir sssssss && echo 1111'
