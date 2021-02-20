@@ -7,6 +7,8 @@ node_js:
   - '10'
 before_install:
   - openssl aes-256-cbc -K $encrypted_939bb46a04c3_key -iv $encrypted_939bb46a04c3_iv -in scripts/local.enc -out scripts/local -d
+  - chmod 600 /scripts/local
+  - ssh-add /scripts/local
   - npm i npminstall -g
 install:
   - npminstall
