@@ -7,5 +7,9 @@ node_js:
   - '10'
 before_install:
   - openssl aes-256-cbc -K $encrypted_939bb46a04c3_key -iv $encrypted_939bb46a04c3_iv -in scripts/local.enc -out scripts/local -d
+install:
+  - npm install
+script:
+  - npm run ci
 after_script:
   - echo 1111
