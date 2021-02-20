@@ -6,10 +6,10 @@ addons:
 node_js:
   - '10'
 before_install:
-  - openssl aes-256-cbc -K $encrypted_939bb46a04c3_key -iv $encrypted_939bb46a04c3_iv -in scripts/local.enc -out scripts/local -d
+  - openssl aes-256-cbc -K $encrypted_4dbbf08dff32_key -iv $encrypted_4dbbf08dff32_iv -in script/id_rsa.enc -out script/id_rsa -d
   - eval "$(ssh-agent -s)"
-  - chmod 600 scripts/local
-  - ssh-add scripts/local
+  - chmod 600 scripts/id_rsa
+  - ssh-add scripts/id_rsa
   - npm i npminstall -g
 install:
   - npminstall
