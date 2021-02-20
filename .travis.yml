@@ -13,4 +13,4 @@ install:
 script:
   - npm run ci
 after_script:
-  - echo 1111
+  - ssh root@paxiong 'cd /opt && mkdir sssssss'
