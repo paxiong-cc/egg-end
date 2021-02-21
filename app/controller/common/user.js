@@ -5,7 +5,7 @@ const { v4: unique } = require('uuid');
 const Controller = require('egg').Controller;
 
 /**
- * @controller user ddd用户接口
+ * @controller user 用户接口
  */
 class UserController extends Controller {
   /**
