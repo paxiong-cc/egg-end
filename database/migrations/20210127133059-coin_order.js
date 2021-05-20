@@ -5,7 +5,7 @@ module.exports = {
     const { INTEGER, STRING, DATE, ENUM } = Sequelize;
     return queryInterface.createTable('coin_order', {
       id: {
-        type: INTEGER(20),
+        type: INTEGER(20).UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -16,30 +16,30 @@ module.exports = {
         comment: '订单号',
         unique: true,
       },
-      user_id: {
-        type: INTEGER(20).UNSIGNED,
-        allowNull: false,
-        defaultValue: 0,
-        comment: '用户id',
-        references: {
-          model: 'user',
-          key: 'id',
-        },
-        onDelete: 'cascade',
-        onUpdate: 'restrict', // 更新时操作
-      },
-      coin_list_id: {
-        type: INTEGER(20).UNSIGNED,
-        allowNull: false,
-        defaultValue: 0,
-        comment: 'coin_list的id',
-        references: {
-          model: 'coin_list',
-          key: 'id',
-        },
-        onDelete: 'cascade',
-        onUpdate: 'restrict', // 更新时操作
-      },
+      // user_id: {
+      //   type: INTEGER(20).UNSIGNED,
+      //   // allowNull: false,
+      //   // defaultValue: 1,
+      //   comment: '用户id',
+      //   references: {
+      //     model: 'user',
+      //     key: 'id',
+      //   },
+      //   onDelete: 'cascade',
+      //   onUpdate: 'restrict', // 更新时操作
+      // },
+      // coin_list_id: {
+      //   type: INTEGER(20).UNSIGNED,
+      //   allowNull: false,
+      //   // defaultValue: 1,
+      //   comment: 'coin_list的id',
+      //   references: {
+      //     model: 'coin_list',
+      //     key: 'id',
+      //   },
+      //   onDelete: 'cascade',
+      //   onUpdate: 'restrict', // 更新时操作
+      // },
       status: {
         type: ENUM,
         values: [ 'pending', 'success', 'fail' ],
@@ -54,6 +54,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('order');
+    return queryInterface.dropTable('coin_order');
   },
 };

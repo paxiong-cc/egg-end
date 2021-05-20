@@ -6,7 +6,7 @@ module.exports = app => {
 
   const CoinOrder = app.model.define('coin_order', {
     id: {
-      type: INTEGER(20),
+      type: INTEGER(20).UNSIGNED,
       primaryKey: true,
       autoIncrement: true,
     },
