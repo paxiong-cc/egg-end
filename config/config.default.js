@@ -126,8 +126,11 @@ module.exports = appInfo => {
   config.auth = {
     ignore: [
       '/common',
+      'server/common',
       ctx => ctx.path.startsWith('/swagger'),
+      ctx => ctx.path.startsWith('server/swagger'),
       ctx => ctx.path.startsWith('/favicon'),
+      ctx => ctx.path.startsWith('server/favicon'),
     ],
   };
   config.authManager = {
