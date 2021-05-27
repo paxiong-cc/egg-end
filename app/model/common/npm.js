@@ -27,6 +27,11 @@ module.exports = app => {
       allowNull: false,
       comment: '版本号',
     },
+    type: {
+      type: STRING(15),
+      allowNull: false,
+      comment: '类型',
+    },
     created_at: DATE,
     updated_at: DATE,
     deleted_at: { type: DATE, allowNull: true, defaultValue: null },
