@@ -30,7 +30,17 @@ module.exports = app => {
     type: {
       type: STRING(15),
       allowNull: false,
-      comment: '类型',
+      comment: '类型 default custom',
+    },
+    tag: {
+      type: STRING(15),
+      allowNull: false,
+      comment: '类型 project component',
+    },
+    ignore: {
+      type: STRING(200),
+      allowNull: false,
+      comment: '忽略文件',
     },
     created_at: DATE,
     updated_at: DATE,
